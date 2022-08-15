@@ -266,15 +266,18 @@ class _DatePickerComponent extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _DatePickerState();
+    return _DatePickerState(locale);
   }
 }
 
 class _DatePickerState extends State<_DatePickerComponent> {
+  _DatePickerState(
+    this.locale,
+  );
   late FixedExtentScrollController leftScrollCtrl,
       middleScrollCtrl,
       rightScrollCtrl;
-
+  final LocaleType? locale;
   @override
   void initState() {
     super.initState();
@@ -405,6 +408,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
+              width: locale == LocaleType.tw ? 220 : null,
               child: widget.pickerModel.layoutProportions()[0] > 0
                   ? _renderColumnView(
                       ValueKey(widget.pickerModel.currentLeftIndex()),
