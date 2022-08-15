@@ -163,7 +163,7 @@ class DatePickerModel extends CommonPickerModel {
   void _fillLeftLists() {
     this.leftList = List.generate(maxTime.year - minTime.year + 1, (int index) {
       // print('LEFT LIST... ${minTime.year + index}${_localeYear()}');
-      return '${minTime.year + index}${_localeYear()}';
+      return '${minTime.year + index}${_localeYear(minTime.year + index)}';
     });
   }
 
@@ -335,11 +335,18 @@ class DatePickerModel extends CommonPickerModel {
     }
   }
 
-  String _localeYear() {
+  String _localeYear(int year) {
     if (locale == LocaleType.zh || locale == LocaleType.jp) {
       return '年';
     } else if (locale == LocaleType.ko) {
       return '년';
+    } else if (locale == LocaleType.tw) {
+      if (year < 1912)
+        return '/民國前${1911 - year}年';
+      else if (year == 1912)
+        return '/民國元年';
+      else
+        return '/民國${year - 1911}年';
     } else {
       return '';
     }
